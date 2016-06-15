@@ -34,6 +34,7 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 @property (nonatomic, strong) NSAttributedString *attributedTruncationToken;
 @property (nonatomic, strong) NSAttributedString *currentAttributedString;
 
+@property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) NSRange selectedRange;
 @property (nonatomic, assign) NSRange truncatedRange;
 @property (nonatomic, assign) NSRange truncatedPatternRange;
@@ -505,6 +506,7 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [[touches anyObject] locationInView:self];
+    
 	NSInteger index = [self characterIndexAtLocation:touchLocation];
 	NSRange rangeOfTappedText;
 	if (index < self.textStorage.length) {
@@ -514,7 +516,7 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 	if (rangeOfTappedText.location != NSNotFound &&
 		![self patternTouchInProgress] &&
 		[self shouldHandleTouchAtIndex:index]) {
-
+        self.selectedIndex = index;
 		[self handleTouchBeginForRange:rangeOfTappedText];
 	}else {
 		[super touchesBegan:touches withEvent:event];
@@ -606,7 +608,7 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 															   atIndex:index
 														effectiveRange:&patternRange];
 		if (tapResponder) {
-            NSUInteger tapIndex = index - patternRange.location;
+            NSUInteger tapIndex = self.selectedIndex - patternRange.location;
 			tapResponder([self.textStorage.string substringWithRange:patternRange], tapIndex);
 		}
 	}
