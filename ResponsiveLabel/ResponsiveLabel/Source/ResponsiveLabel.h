@@ -22,7 +22,7 @@ extern NSString *RLHighlightedBackgroundCornerRadius;
 /**
  Type for responder block to be specfied with RLTapResponderAttributeName
  */
-typedef void (^PatternTapResponder)(NSString *tappedString);
+typedef void (^PatternTapResponder)(NSString *tappedString, NSUInteger index);
 
 
 IB_DESIGNABLE
