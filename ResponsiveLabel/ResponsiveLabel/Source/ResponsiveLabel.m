@@ -608,8 +608,7 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 															   atIndex:index
 														effectiveRange:&patternRange];
 		if (tapResponder) {
-            NSUInteger tapIndex = self.selectedIndex - patternRange.location;
-			tapResponder([self.textStorage.string substringWithRange:patternRange], tapIndex);
+			tapResponder([self.textStorage.string substringWithRange:patternRange], self.selectedIndex);
 		}
 	}
 }
